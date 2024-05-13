@@ -1,3 +1,4 @@
+import { kv } from "@vercel/kv"
 
 type Recipe = {
     name: string
@@ -14,16 +15,25 @@ type Ingredient = {
     measurementType: String
 }
 
-export function RecipeComponent(recipe: Recipe){
+export async function RecipeComponent({ recipeName }: { recipeName: string }){
+    // let response = await kv.set(recipeName, {"name":"Pasta", "ingredients":[{"name": "Rigatoni", "measurementNumber":1, "measurementType":"lb"}], "instructions":["Boil Pasta"]})
+    let recipe: any = await kv.get(recipeName)
+    console.log(recipe)
     return <div>
-        <h1>{recipe.name}</h1>
+        {recipe !== null && 
+            <div><h1>{recipe.name}</h1>
 
-        <ul>
-            {recipe.ingredients.map(ing => <li>{ing.name}</li>)}
-        </ul>
+                <ul>
+                    {recipe.ingredients.map((ing, idx) => <li key={idx}>{ing.name}</li>)}
+                </ul>
 
-        <ol>
-            {recipe.instructions.map(instr => <li>{instr}</li>)}
-        </ol>
+                <ol>
+                    {recipe.instructions.map((instr, idx) => <li key={idx}>{instr}</li>)}
+                </ol>
+            </div>
+        }
+
+        {recipe == null && <h1>Recipe Not Found</h1>}
+        
     </div>
 }
