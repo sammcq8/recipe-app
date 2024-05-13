@@ -17,7 +17,7 @@ type Ingredient = {
 
 export async function RecipeComponent({ recipeName }: { recipeName: string }){
     // let response = await kv.set(recipeName, {"name":"Pasta", "ingredients":[{"name": "Rigatoni", "measurementNumber":1, "measurementType":"lb"}], "instructions":["Boil Pasta"]})
-    let recipe: any = await kv.get(recipeName)
+    let recipe: Recipe|null = await kv.get(recipeName)
     console.log(recipe)
     return <div>
         {recipe !== null && 
