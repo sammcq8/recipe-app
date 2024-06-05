@@ -4,8 +4,8 @@ import { DatabaseRecipeComponent, ScrapedComponent } from "./components/recipe";
 export default function Home() {
 
   return  (<main className="flex min-h-screen flex-col items-center justify-between p-24">
-    <DatabaseRecipeComponent recipeName="Pasta"></DatabaseRecipeComponent>
-    <ScrapedComponent url="https://www.101cookbooks.com/roasted-cauliflower/"></ScrapedComponent>
+    { <DatabaseRecipeComponent recipeName="Pasta"></DatabaseRecipeComponent> }
+    <ScrapedComponent url="https://www.bbcgoodfood.com/recipes/chocolate-avocado-cake"></ScrapedComponent>
   </main>)
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">

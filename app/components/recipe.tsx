@@ -1,4 +1,5 @@
 import { kv } from "@vercel/kv"
+import recipeScraper from "@/app/recipe-scraper"
 
 type Recipe = {
     name: string
@@ -15,10 +16,11 @@ type Ingredient = {
     measurementType: String
 }
 
-const recipeScraper = require("recipe-scraper");
+//onst recipeScraper = require("recipe-scraper");
+
 
 export async function DatabaseRecipeComponent({ recipeName }: { recipeName: string }){
-    // let response = await kv.set(recipeName, {"name":"Pasta", "ingredients":[{"name": "Rigatoni", "measurementNumber":1, "measurementType":"lb"}], "instructions":["Boil Pasta"]})
+    let response = await kv.set(recipeName, {"name":"Pasta", "ingredients":[{"name": "Rigatoni", "measurementNumber":1, "measurementType":"lb"}], "instructions":["Boil Pasta"]})
     let recipe: Recipe|null = await kv.get(recipeName)
     console.log()
     return RecipeComponent(recipe)
@@ -46,7 +48,7 @@ function RecipeComponent(recipe:Recipe|null){
 
 export async function ScrapedComponent({url}:{url:string}){
     console.log(url)
-    let recipe = await recipeScraper(url).catch( (_: any) => {console.log("Not Found"); return null})
+    let recipe = await recipeScraper(url).catch( (e: any) => {console.log("Not Found, " + e); return null})
     return RecipeComponent(recipe)
 
 
